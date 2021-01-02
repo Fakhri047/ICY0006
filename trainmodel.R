@@ -9,6 +9,9 @@ library(naniar)
 library(MLmetrics)
 library(e1071)
 library(psych)
+library(forecast)
+library(fma)
+
 
 
 getmode <- function(v) {
@@ -215,7 +218,7 @@ points(archive$`Carbon Dioxide (ppm)`,
 
 tCarbon_Dioxide <- test$"Carbon Dioxide (ppm)"
 tSeasonally_Adjusted <- test$"Seasonally Adjusted CO2 (ppm)"
-tYear <- test$"Year"
+tYear <- test$`Decimal Date`
 
 yearCarbon.lm<-lm(tCarbon_Dioxide~tYear)
 yearSeason.lm<-lm(tSeasonally_Adjusted~tYear)
@@ -241,7 +244,7 @@ paste0("yearSeason svm model: ",
 
 
 
-plot( tYear,tCarbon_Dioxide, xlab="Year", ylab="Carbon Dioxide (ppm)", pch=21)
+plot( tYear,tCarbon_Dioxide, xlab="Year&Month", ylab="Carbon Dioxide (ppm)", pch=21)
 points (tYear,
         yearCarbon.prediction.lm,
         col = "blue",
@@ -252,7 +255,7 @@ points(tYear,
        pch = 16)
 abline(lm(archive$`Carbon Dioxide (ppm)` ~ archive$Year , data = archive), col = "green")
 
-plot( tYear,tSeasonally_Adjusted, xlab="Year", ylab="Seasonally Adjusted CO2 (ppm)", pch=21)
+plot( tYear,tSeasonally_Adjusted, xlab="Year&Month", ylab="Seasonally Adjusted CO2 (ppm)", pch=21)
 points (tYear,
         yearSeason.prediction.lm,
         col = "blue",
@@ -262,3 +265,7 @@ points(tYear,
        col = "red",
        pch = 16)
 abline(lm(archive$`Seasonally Adjusted CO2 (ppm)` ~ archive$Year , data = archive), col = "green")
+
+
+
+
